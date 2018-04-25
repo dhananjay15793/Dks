@@ -1,5 +1,8 @@
 package generic;
 
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Date;
@@ -25,6 +28,36 @@ public class AUL {
 		
 	}
 	
+	
+	public boolean FileUploadUsingRobot(String m_strText) throws Exception {
+		boolean bStatus = false;
+		try {
+			StringSelection stringSelection = new StringSelection(m_strText);
+			Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
+
+			Robot robot = new Robot();
+			robot.keyPress(17);
+			robot.keyPress(86);
+			robot.keyRelease(86);
+			Thread.sleep(1000L);
+			robot.keyRelease(17);
+			Thread.sleep(1000L);
+			robot.keyPress(9);
+			robot.keyRelease(9);
+			Thread.sleep(1000L);
+			robot.keyPress(9);
+			robot.keyRelease(9);
+			Thread.sleep(1000L);
+			robot.keyPress(10);
+			robot.keyRelease(10);
+			Thread.sleep(2000L);
+			bStatus = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return bStatus;
+	}
+	
 //Method to take screen shot of App
 	public static void takePhoto(String folder,String TestName,WebDriver driver){
 		String dateTime = new Date().toString().replaceAll(":","_");
@@ -34,7 +67,9 @@ public class AUL {
 		try {
 			FileUtils.copyFile(srcFile,new File(dstPath));
 		} catch (Exception e) {
-		}
+	}
+		
+		
 	}
 }
 
